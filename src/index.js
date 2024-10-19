@@ -1,7 +1,7 @@
 // Your code here
-
+const baseUrl = "http://localhost:3000"
 function initialize() {
-    const baseUrl = "http://localhost:3000"
+    
    
 // See the first movie's details
     fetch ( `${baseUrl}/films/1`)
@@ -26,7 +26,10 @@ function initialize() {
         if (availableTickets.textContent > 0) {
             availableTickets.textContent -=1
         } else {
-            availableTickets.textContent = "Sold out"
+            availableTickets.textContent = "Sold Out"
+            button.textContent = 'Sold Out'
+            const li = document.querySelector('li')
+            li.classList = "sold-out"          
         }
 
     })
@@ -44,13 +47,31 @@ function initialize() {
             li.classList = "film item"
             li.textContent = movie.title
             ul.appendChild(li)
+            li.addEventListener('click', ()=>{
+                const poster = document.getElementById('poster')
+                poster.src = movie['poster']
+                const title = document.getElementById('title')
+                title.textContent = movie.title
+                const runtime = document.getElementById('runtime')
+                runtime.textContent = `Runtime: ${movie.runtime} minutes`
+                const description = document.getElementById('film-info')
+                description.textContent = movie.description
+                const showtime = document.getElementById('showtime')
+                showtime.textContent = movie.showtime
+                const availableTickets = document.getElementById('ticket-num')
+                availableTickets.textContent = movie.capacity - movie.tickets_sold
+     
+            })
+               
+            
+       
         })
+       
     })
 
-    
+
 }
 
 
 document.addEventListener("DOMContentLoaded", initialize
 )
-//complete
